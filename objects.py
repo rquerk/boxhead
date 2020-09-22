@@ -3,8 +3,7 @@ import coordinates
 class Player(coordinates.MovingObject):
     
     def __init__(self, x: int = 50, y: int = 50, speed: int = 3, width: int = 30, height: int = 10):
-        self.x_onMap = x
-        self.y_onMap = y
+        super().__init__(x = x, y = y)
         self.speed = speed
         self.width = width
         self.height = height
@@ -12,16 +11,7 @@ class Player(coordinates.MovingObject):
     def get_area(self) -> ():
         player_area = (self.x_onMap, self.y_onMap, self.width, self.height)
         return player_area
-    
-    def allowed_walking_area(self, width: int, height: int, border_strength: int) -> ():
-        move_width = width - border_strength*2
-        move_height = height - border_strength*2
         
-        self.walking_rectangle = (border_strength, border_strength,
-                                  move_width , move_height)
-        
-        return self.walking_rectangle
-    
     def position_onCamera(self, cameraObj):
         self.x_onCamera = self.x_onMap - cameraObj.x_onMap
         self.y_onCamera = self.y_onMap - cameraObj.y_onMap
@@ -29,10 +19,12 @@ class Player(coordinates.MovingObject):
                           self.width, self.height)
         return (self.rectangle)
     
+    def set_walking_rectangle(self, mapObj) -> (int, int, int, int):    
+        self.walking_rectangle = mapObj.allowed_walking_area()
+        
     def set_color_player(self, color):
         self.color = color
         
-    
     def can_move_up(self) -> bool:
         if self.y_onMap > self.walking_rectangle[1] + self.speed:
             return True
@@ -82,21 +74,19 @@ class Player(coordinates.MovingObject):
 class Camera(coordinates.MovingObject):
 
     def __init__(self, x: int = 0, y: int = 0, width: int = 1800, height: int = 950):
-        self.x_onMap: int = x
-        self.y_onMap = y
-        self.width = width
-        self.height = height
+        super().__init__(x = x, y = y)
+        self.width: int = width
+        self.height: int = height
         
-        self.size = (width, height)
+        self.size: (int, int) = (width, height)
         
         self.old_rectangles = []
         self.new_rectangles = []
+        
+    def set_camera_speed(self, speed: int) -> None:
+        self.speed = speed
     
-    def get_camera_area(self) -> ():
-        camera_area = (self.x_onMap, self.y_onMap, self.width, self.height)
-        return camera_area
-    
-    def set_movement_rectangle(self, width = 1500, height = 700):
+    def set_movement_rectangle(self, width: int = 1500, height: int = 700) -> None:
         if width > self.width or height > self.height:
             error_msg = ["rectangle to limit player movement", 
                         "without camera movement is too big.", 
@@ -105,18 +95,21 @@ class Camera(coordinates.MovingObject):
         x_pos = (self.width - width)/2
         y_pos = (self.height - height)/2
         self.movement_rectangle = (x_pos, y_pos, width, height)
-    
-    def set_camera_speed(self, speed):
-        self.speed = speed
         
-    def move_up(self):
-        self.y_onMap -= self.speed 
+    def compute_camera_area(self) -> (int, int, int, int):
+        camera_area = (self.x_onMap, self.y_onMap, self.width, self.height)
+        return camera_area
+        
+    def move_up(self) -> None:
+        self.y_onMap -= self.speed
     
-    def move_left(self):
+    def move_left(self) -> None:
         self.x_onMap -= self.speed
         
-    def move_right(self):
+    def move_right(self) -> None:
         self.x_onMap += self.speed
     
-    def move_down(self):
+    def move_down(self) -> None:
         self.y_onMap += self.speed
+    
+    

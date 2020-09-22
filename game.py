@@ -41,8 +41,8 @@ class Szenario:
         self.player_surface = pygame.Surface((player.width, player.height))
         player.set_keys_move(pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d)
         player.set_color_player(pygame.Color("white"))
+        player.set_walking_rectangle(self.map)
         
-        player.allowed_walking_area(self.map.width, self.map.height, self.map.border_strength)
         return player
     
     
@@ -67,8 +67,6 @@ class Szenario:
             pygame.draw.rect(self.map_surface, self.map.bgColor, old)
             
     def swap_old_and_new_rects_then_clear_new(self):
-        """i noticed that one list of effected rects is not
-        enough to keep track of all drwan stuff, am i right?"""
         # new  rectangles, blitted or drawn to screen
         # will be old in next loop run,
         # and old is not effected anymore
@@ -117,7 +115,7 @@ class Szenario:
         effected_rects = self.screen.blit(
             source = self.map_surface,
             dest = (0,0),
-            area = self.camera.get_camera_area())
+            area = self.camera.compute_camera_area())
         self.camera.new_rectangles.append(effected_rects)
     
     

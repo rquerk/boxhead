@@ -1,8 +1,25 @@
 
 class MovingObject:
     
-    def __init__(self):
-        pass
+    def __init__(self, x: int, y : int):
+        self._x_onMap = x
+        self._y_onMap = y
+        
+    @property
+    def x_onMap(self) -> int:
+        return self._x_onMap
+    
+    @property
+    def y_onMap(self) -> int:
+        return self._y_onMap
+    
+    @x_onMap.setter
+    def x_onMap(self, x: int) -> None:
+        self._x_onMap = x
+    
+    @y_onMap.setter
+    def y_onMap(self, y: int) -> None:
+        self._y_onMap = y
 
     def set_keys_move(self, Key_move_up, Key_move_left, Key_move_down, Key_move_right):
         self.Key_move_up = Key_move_up

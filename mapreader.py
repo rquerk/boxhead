@@ -26,6 +26,8 @@ class MapObject:
         
         
 class MapReader:
+    """this class should read tuples representing objects on a map
+    so the MapWriter can save that data in our Map object"""
     
     def read_map_from_file(self, filename: str):
         with open(filename, 'r') as mapFile:

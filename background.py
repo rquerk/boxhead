@@ -18,7 +18,7 @@ class Map:
         border_down = (border_strength, self.height-border_strength,
                        self.width-2*border_strength, border_strength)
 
-        self.borders = [border_left, border_right, border_up, border_down]
+        self.borders = (border_left, border_right, border_up, border_down)
         self.border_strength = border_strength
     
     def set_color_borders(self, color):
@@ -27,8 +27,10 @@ class Map:
     def set_color_background(self, color):
         self.bgColor = color
         
-    #def get_ground_area(self) -> ():
-        #width = self.width - (self.border_strength)*2
-        #height = self.height - (self.border_strength)*2
+    def allowed_walking_area(self) -> (int, int, int, int):
+        width = self.width - (self.border_strength)*2
+        height = self.height - (self.border_strength)*2
         
-        #return (self.border_strength, self.border_strength, width, height)
+        walking_rectangle = (self.border_strength, self.border_strength,
+                                  width , height)
+        return walking_rectangle
