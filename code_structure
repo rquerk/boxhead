@@ -1,23 +1,23 @@
 
-            Libaries:                      pygame
+            Libaries:                   pygame
                                            |
                                            |
             HEAD:           boxhead.py-----|
                                 |          |
                                 |          |         
                             game.py -------|
-                            Scenario                
-            ___________________|
-            |                  |                  
-            background.py   coordinates.py          
-            Map             MovingObject        
-                                ||
-                                \/ 
-                            objects.py
-                            Camera
-                            Player
+                            Scenario         
+                 ______________|___________
+                |              |           |
+            background.py      |        coordinates.py
+            Map                |        MovingObject
+                               |           ||
+                               |           \/
+                               |--------objects.py
+                                        Camera
+                                        Player
 
 | indicates: controll flow
-                
+
 ||
 \/ means: inheritance

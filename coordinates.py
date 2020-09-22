@@ -1,7 +1,7 @@
 
 class MovingObject:
     
-    def __init__(self, x: int, y : int):
+    def __init__(self, x: int, y: int):
         self._x_onMap = x
         self._y_onMap = y
         
@@ -20,12 +20,15 @@ class MovingObject:
     @y_onMap.setter
     def y_onMap(self, y: int) -> None:
         self._y_onMap = y
+        
+    def set_speed(self, speed: int = 5):
+        self.speed = speed
 
-    def set_keys_move(self, Key_move_up, Key_move_left, Key_move_down, Key_move_right):
-        self.Key_move_up = Key_move_up
-        self.Key_move_left = Key_move_left
-        self.Key_move_down = Key_move_down
-        self.Key_move_right = Key_move_right
+    def set_keys_move(self, up: int, left: int, down: int, right: int) -> None:
+        self.Key_move_up = up
+        self.Key_move_left = left
+        self.Key_move_down = down
+        self.Key_move_right = right
         
         self.controls = (self.Key_move_up, self.Key_move_left,
                         self.Key_move_down, self.Key_move_right)

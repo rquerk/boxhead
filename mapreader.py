@@ -1,5 +1,8 @@
 
 class MapObject:
+    """This class saves the Objects and surfaces
+    that make up the map
+    """
     
     def __init__(self, width: int = 10000, height: int = 5000):
         self.width = width
@@ -26,8 +29,9 @@ class MapObject:
         
         
 class MapReader:
-    """this class should read tuples representing objects on a map
-    so the MapWriter can save that data in our Map object"""
+    """This class should read tuples representing objects on a map
+    so the MapWriter can save that data in our Map object
+    """
     
     def read_map_from_file(self, filename: str):
         with open(filename, 'r') as mapFile:
@@ -41,18 +45,19 @@ class MapReader:
             
             #TODO
             #save translated values into quadrupels
+            # use setattr()
             
             print("Names: ", names)
             print("Values: ", values)
             self.is_same_lenght(names = names, values = values)
     
-    def is_same_lenght(self, names, values):
+    def is_same_lenght(self, names, values) -> bool:
         error_msg = ["input file for map is invalid",
                     "len(names) don't match len(values)",
                     "mapreader.py save_values()"]
         if len(names) != len(values):
             raise RuntimeError(error_msg)
-        return True
+        else: return True
     
     
 if __name__ == "__main__":
