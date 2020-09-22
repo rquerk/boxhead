@@ -12,7 +12,7 @@ class Player(coordinates.MovingObject):
         self.width = width
         self.height = height
         self.is_visible = True
-       
+        self.cameraObj: coordinates.MovingObject
     
     # Start visibility----------------------------------------------------
     def get_area(self) -> ():
@@ -27,11 +27,13 @@ class Player(coordinates.MovingObject):
                     on the camera, or None,
                     if the object is not visible
         """
+        self.cameraObj = cameraObj
         self.x_onCamera = self.x_onMap - cameraObj.x_onMap
         self.y_onCamera = self.y_onMap - cameraObj.y_onMap
         self.rectangle = (self.x_onCamera, self.y_onCamera,
                           self.width, self.height)
-        if self.is_visible(cameraObj):
+        self.compute_visibilty()
+        if self.is_visible:
             return self.rectangle
         else:
             return None
@@ -40,37 +42,30 @@ class Player(coordinates.MovingObject):
     # second felt like a double compution.
     # But that way,
     # following functions dedend on the one above.
-    def obj_is_right_from_left_screen_border(self, cameraObj) -> None:
+    def obj_is_right_from_left_screen_border(self) -> None:
         if self.x_onCamera + self.width < 0:
             self.is_visible = False
     
-    def obj_is_left_from_right_screen_border(self, cameraObj) -> None:
-        if self.x_onCamera > cameraObj.width:
+    def obj_is_left_from_right_screen_border(self) -> None:
+        if self.x_onCamera > self.cameraObj.width:
             self.is_visible = False
         
-    def obj_is_under_top_screen_border(self, cameraObj) -> None:
+    def obj_is_under_top_screen_border(self) -> None:
         if self.y_onCamera < 0:
             self.is_visible = False
 
-    def obj_is_over_bottom_screen_border(self, cameraObj) -> None:
-        if self.y_onCamera > cameraObj.height:
+    def obj_is_over_bottom_screen_border(self) -> None:
+        if self.y_onCamera > self.cameraObj.height:
             self.is_visible = False
     
     # this function brings the four quistions
     # out of the if statement in is_visible()
     def compute_visibilty(self) -> None:
-        is_visible = True
-        obj_is_left_from_right_screen_border()
-        obj_is_over_bottom_screen_border()
-        obj_is_right_from_left_screen_border
-        obj_is_under_top_screen_border
-    
-    def is_visible(self, cameraObj) -> bool:
-        self.compute_visibilty()
-        if self.is_visible:
-            return True
-        else:
-            return False
+        self.is_visible = True
+        self.obj_is_left_from_right_screen_border()
+        self.obj_is_over_bottom_screen_border()
+        self.obj_is_right_from_left_screen_border()
+        self.obj_is_under_top_screen_border()
     
     def set_color_player(self, color: int) -> None:
         self.color = color
