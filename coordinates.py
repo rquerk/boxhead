@@ -13,7 +13,7 @@ class MovingObject:
         self.controls = (self.Key_move_up, self.Key_move_left,
                         self.Key_move_down, self.Key_move_right)
     
-    def update_coordinates(self, key):
+    def update_coordinates(self, key: int):
         if key == self.Key_move_up:
             self.move_up()
         elif key == self.Key_move_down:
@@ -24,5 +24,5 @@ class MovingObject:
         elif key == self.Key_move_right:
             self.move_right()
     
-    def move(self, key):
+    def move(self, key: int):
         self.update_coordinates(key)

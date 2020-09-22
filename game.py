@@ -22,21 +22,21 @@ class Szenario:
         self.map = self.init_Map()
         self.player = self.init_player()
         
-    def init_camera(self):
+    def init_camera(self) -> objects.Camera:
         camera = objects.Camera()
         camera.set_keys_move(pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d)
         camera.set_movement_rectangle()
         camera.set_camera_speed(self.cameraAndPlayerSpeed)
         return camera
         
-    def init_Map(self):
+    def init_Map(self) -> background.Map:
         map = background.Map()
         self.map_surface = pygame.Surface((map.width, map.height))
         map.set_color_background(pygame.Color("black"))
         map.set_color_borders(pygame.Color("white"))
         return map
     
-    def init_player(self):
+    def init_player(self) -> objects.Player:
         player = objects.Player(speed = self.cameraAndPlayerSpeed)
         self.player_surface = pygame.Surface((player.width, player.height))
         player.set_keys_move(pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d)
@@ -65,7 +65,21 @@ class Szenario:
     def remove_old_rects_from_map(self):
         for old in self.map.old_rectangles:
             pygame.draw.rect(self.map_surface, self.map.bgColor, old)
-    
+            
+    def swap_old_and_new_rects_then_clear_new(self):
+        """i noticed that one list of effected rects is not
+        enough to keep track of all drwan stuff, am i right?"""
+        # new  rectangles, blitted or drawn to screen
+        # will be old in next loop run,
+        # and old is not effected anymore
+        self.camera.old_rectangles.clear()
+        self.camera.old_rectangles.extend(self.camera.new_rectangles)
+        self.camera.new_rectangles.clear()
+        # same with players traces
+        self.map.old_rectangles.clear()
+        self.map.old_rectangles.extend(self.map.new_rectangles)
+        self.map.new_rectangles.clear()
+        
     # drawing the objects on surfaces once in the beginning
     def draw_startSzenario(self): 
         self.screen.fill(pygame.Color("black"))
@@ -73,8 +87,8 @@ class Szenario:
         self.draw_player_surface()
         self.update_screen()
     
-    
-    def move_player_and_camera(self, key):
+    #---------------Moving and changeing the screen---------------------------#
+    def move_player_and_camera(self, key: int):
         player_onMap = pygame.Rect(self.player.get_area())
         allowed_movement_zone_map = pygame.Rect(self.player.walking_rectangle)
         
@@ -116,11 +130,4 @@ class Szenario:
                         + self.camera.old_rectangles)
         pygame.display.update(effected_rects)
         
-        # new will be old in next loop run, and old is not effected anymore
-        self.camera.old_rectangles.clear()
-        self.camera.old_rectangles.extend(self.camera.new_rectangles)
-        self.camera.new_rectangles.clear()
-        # same with players traces
-        self.map.old_rectangles.clear()
-        self.map.old_rectangles.extend(self.map.new_rectangles)
-        self.map.new_rectangles.clear()
+        self.swap_old_and_new_rects_then_clear_new()

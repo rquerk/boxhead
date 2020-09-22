@@ -2,18 +2,18 @@ import coordinates
 
 class Player(coordinates.MovingObject):
     
-    def __init__(self, x = 750, y = 350, speed = 3, width = 30, height = 10):
+    def __init__(self, x: int = 50, y: int = 50, speed: int = 3, width: int = 30, height: int = 10):
         self.x_onMap = x
         self.y_onMap = y
         self.speed = speed
         self.width = width
         self.height = height
        
-    def get_area(self):
+    def get_area(self) -> ():
         player_area = (self.x_onMap, self.y_onMap, self.width, self.height)
         return player_area
     
-    def allowed_walking_area(self, width, height, border_strength):
+    def allowed_walking_area(self, width: int, height: int, border_strength: int) -> ():
         move_width = width - border_strength*2
         move_height = height - border_strength*2
         
@@ -33,24 +33,24 @@ class Player(coordinates.MovingObject):
         self.color = color
         
     
-    def can_move_up(self):
+    def can_move_up(self) -> bool:
         if self.y_onMap > self.walking_rectangle[1] + self.speed:
             return True
         else: return False
     
-    def can_move_left(self):
+    def can_move_left(self) -> bool:
         if self.x_onMap > (self.walking_rectangle[0] + self.speed):
             return True
         else: return False
     
-    def can_move_down(self):
+    def can_move_down(self) -> bool:
         pos = self.y_onMap + self.height + self.speed
         if pos < (self.walking_rectangle[1]
                 + self.walking_rectangle[3]):
             return True
         else: return False
     
-    def can_move_right(self):
+    def can_move_right(self) -> bool:
         pos = self.x_onMap + self.width + self.speed 
         if pos < (self.walking_rectangle[0]
                 + self.walking_rectangle[2]):
@@ -81,8 +81,8 @@ class Player(coordinates.MovingObject):
 
 class Camera(coordinates.MovingObject):
 
-    def __init__(self, x = 0, y = 0, width = 1800, height = 950):
-        self.x_onMap = x
+    def __init__(self, x: int = 0, y: int = 0, width: int = 1800, height: int = 950):
+        self.x_onMap: int = x
         self.y_onMap = y
         self.width = width
         self.height = height
@@ -92,7 +92,7 @@ class Camera(coordinates.MovingObject):
         self.old_rectangles = []
         self.new_rectangles = []
     
-    def get_camera_area(self):
+    def get_camera_area(self) -> ():
         camera_area = (self.x_onMap, self.y_onMap, self.width, self.height)
         return camera_area
     

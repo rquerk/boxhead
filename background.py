@@ -2,7 +2,7 @@
 class Map:
     """representation of a simple map used for testing"""
     
-    def __init__(self, width = 5000, height = 5000):
+    def __init__(self, width: int = 2000, height: int = 1800):
         self.width = width
         self.height = height
         self.new_rectangles = []
@@ -27,8 +27,8 @@ class Map:
     def set_color_background(self, color):
         self.bgColor = color
         
-    def get_ground_area(self):
-        width = self.width - (self.border_strength)*2
-        height = self.height - (self.border_strength)*2
+    #def get_ground_area(self) -> ():
+        #width = self.width - (self.border_strength)*2
+        #height = self.height - (self.border_strength)*2
         
-        return (self.border_strength, self.border_strength, width, height)
+        #return (self.border_strength, self.border_strength, width, height)

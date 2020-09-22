@@ -1,7 +1,7 @@
 
 class MapObject:
     
-    def __init__(self, width = 10000, height = 5000):
+    def __init__(self, width: int = 10000, height: int = 5000):
         self.width = width
         self.height = height
         
@@ -18,16 +18,16 @@ class MapObject:
 
         self.borders = (border_left, border_right, border_up, border_down)
 
-    def set_color_borders(self, color):
+    def set_color_borders(self, color: int):
         self.borderColor = color
     
-    def set_color_background(self, color):
+    def set_color_background(self, color: int):
         self.bgColor = color
         
         
 class MapReader:
     
-    def read_map_from_file(self, filename):
+    def read_map_from_file(self, filename: str):
         with open(filename, 'r') as mapFile:
             map_data = mapFile.readlines()
             names, values = [], []
